@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lucamusic.event.entity.Event;
@@ -41,18 +42,33 @@ public class EventController {
 	private EventService serv;
 
 	/**
-	 * Metodo para recuperar un listado completo de los eventos
+	 * Metodo para recuperar un listado de eventos fintrando por parámetros o el listado completo
 	 * 
+	 * @param musicStyle 
+	 * @param name
 	 * @return List<Event>
 	 * @author Jose Antonio
 	 */
 	@GetMapping
-	public ResponseEntity<List<Event>> getEvents() {
+	public ResponseEntity<List<Event>> getEvents(@RequestParam (required = false, name = "musicStyle")String musicStyle, @RequestParam (required = false, name = "name")String name ) {
 		log.info("Fetching all Events");
-		List<Event> events = serv.eventsByStatus("CREATED");
-		if (events.isEmpty()) {
-			return ResponseEntity.noContent().build();
+		List<Event> events;
+		
+		//Comprobar también que el estado del evento es siempre "created"
+		if(musicStyle != null && name != null) {
+			events = serv.findAllFiltered(name, musicStyle);
+			
+		}else if (name != null){
+			events = serv.eventsFilteredByName(name);
+		}else if (musicStyle != null) {
+			events = serv.findByMusicStyle(musicStyle);
+		}else {
+			events = serv.eventsByStatus("CREATED");
+			if (events.isEmpty()) {
+				return ResponseEntity.noContent().build();
+			}
 		}
+		
 		return ResponseEntity.ok(events);
 	}
 

@@ -49,6 +49,16 @@ public class EventServiceImpl implements EventService {
 	public List<Event> eventsByStatus(String status){
 		return eventRepository.findAllByStatus(status);
 	}
+	
+	/**
+	 * Devuelve una lista de eventos filtrados por el género
+	 * @param musicStyle Género de musica del evento
+	 * @return Lista de eventos
+	 */
+	@Override
+	public List<Event> findByMusicStyle(String musicStyle) {
+		return eventRepository.findByMusicStyle(musicStyle);
+	}
 
 
 	/**
@@ -119,8 +129,14 @@ public class EventServiceImpl implements EventService {
 		}
 		return eventRepository.save(eventDB);
 	}
-	
+
+	@Override
 	public List<Event> eventsFilteredByName(String name){
 		return eventRepository.findAllByNameContaining(name);
+		}
+
+	@Override
+	public List<Event> findAllFiltered(String name, String musicStyle) {
+		return eventRepository.findAllByNameContainingAndMusicStyleAndStatusEquals(name, musicStyle, "CREATED");
 	}
 }
