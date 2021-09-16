@@ -10,5 +10,5 @@ public interface EventService {
 	public Event modifyEvent(Event event);
 	public List<Event> eventsByStatus(String status);
 	public List<Event> findByMusicStyle(String musicStyle);
-	public List<Event> findByNameList(String name);
+	//public List<Event> findByNameList(String name);
 }

@@ -51,13 +51,7 @@ public class EventController {
 	@GetMapping
 	public ResponseEntity<List<Event>> getEvents(@RequestParam (required = false, name = "musicStyle")String musicStyle, @RequestParam (required = false, name = "name")String name ) {
 		log.info("Fetching all Events");
-		List<Event> events=null;
-		
-		if(musicStyle != null) {
-			events = serv.findByMusicStyle(musicStyle);
-		}else if (name != null){
-			events = serv.findByNameList(name);
-		}
+		List<Event> events = serv.eventsByStatus("CREATED");
 		if (events.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
