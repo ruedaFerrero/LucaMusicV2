@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import com.lucamusic.user.service.UserService;
 import com.lucamusic.user.utils.Utils;
+import com.lucamusic.user.controller.error.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,8 @@ public class UserController {
 	@PostMapping
 	public ResponseEntity<User> createUser(@Valid @RequestBody  User user, BindingResult result){
 		log.info("Creating User: {}", user);
+		//si hay un error, debe saltar una excepción antes de entrar
+		//que captura el CustomGlobalExceptionHandler
 		if(result.hasErrors()){
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
 		}
@@ -56,10 +59,13 @@ public class UserController {
 	@GetMapping("/{id}")
 	public ResponseEntity<User> getUserById(@PathVariable("id") Long id){
 		log.info("Fetching User with id {}", id);
+		
 		User user = userServ.findByID(id);
 		if(user == null){
-			log.error("Event with id {} not found", id);
-			return ResponseEntity.notFound().build();
+//			log.error("Event with id {} not found", id);
+//			return ResponseEntity.notFound().build();
+			UserNotFoundException ex = new UserNotFoundException();
+			throw ex;
 		}
 		return ResponseEntity.ok(user);
 	}
