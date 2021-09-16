@@ -1,0 +1,15 @@
+server:
+  port: 8091
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: never
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://root:root@cluster0.u6ivd.mongodb.net/events?retryWrites=true&w=majority
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  date-format: java.txt.SimpleDateFormat
