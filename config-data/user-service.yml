@@ -18,7 +18,3 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
         format-sql: true
-
-  jackson:
-    serialization:
-      FAIL_ON_EMPTY: false
