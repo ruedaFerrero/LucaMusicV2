@@ -13,3 +13,7 @@ spring:
     serialization:
       write-dates-as-timestamps: false
   date-format: java.txt.SimpleDateFormat
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: https://localhost:8099/eureka/
