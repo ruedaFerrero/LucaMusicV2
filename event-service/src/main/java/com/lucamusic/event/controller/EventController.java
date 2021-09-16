@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -131,4 +132,13 @@ public class EventController {
 		eventDeleted = serv.deleteEvent(eventDeleted);
 		return ResponseEntity.ok(eventDeleted);
 	}
+	
+	
+	@GetMapping("/name")
+	public ResponseEntity <List<Event>> findByName(@RequestBody Event event,String name ) {
+		List<Event> events = serv.eventsFilteredByName(name);
+		return ResponseEntity.ok(serv.eventsFilteredByName(name));
+	}
+	
+	
 }

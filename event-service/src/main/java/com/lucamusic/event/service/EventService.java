@@ -9,4 +9,5 @@ public interface EventService {
 	public Event deleteEvent(Event event);
 	public Event modifyEvent(Event event);
 	public List<Event> eventsByStatus(String status);
+	public List<Event> eventsFilteredByName(String name);
 }

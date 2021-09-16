@@ -119,4 +119,8 @@ public class EventServiceImpl implements EventService {
 		}
 		return eventRepository.save(eventDB);
 	}
+	
+	public List<Event> eventsFilteredByName(String name){
+		return eventRepository.findAllByNameContaining(name);
+	}
 }
