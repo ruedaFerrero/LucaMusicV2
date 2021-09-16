@@ -9,4 +9,6 @@ public interface EventService {
 	public Event deleteEvent(Event event);
 	public Event modifyEvent(Event event);
 	public List<Event> eventsByStatus(String status);
+	public List<Event> findByMusicStyle(String musicStyle);
+	public List<Event> findByNameList(String name);
 }
