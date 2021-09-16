@@ -20,5 +20,6 @@ public interface EventRepository extends MongoRepository<Event, String>{
 	public Event findByName(String name);
     public List<Event> findAllByStatus(String status);
     public List<Event> findByMusicStyle(String musicStyle);
-    //public List<Event> findByNameList(String name);
+    public List<Event> findAllByNameContaining(String name);
+    public List<Event> findAllByNameContainingAndMusicStyleAndStatusEquals(String name, String musicStyle, String status);
 }

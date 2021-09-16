@@ -130,8 +130,13 @@ public class EventServiceImpl implements EventService {
 		return eventRepository.save(eventDB);
 	}
 
-//	@Override
-//	public List<Event> findByNameList(String name) {
-//		return eventRepository.findByNameList(name);
-//	}
+	@Override
+	public List<Event> eventsFilteredByName(String name){
+		return eventRepository.findAllByNameContaining(name);
+		}
+
+	@Override
+	public List<Event> findAllFiltered(String name, String musicStyle) {
+		return eventRepository.findAllByNameContainingAndMusicStyleAndStatusEquals(name, musicStyle, "CREATED");
+	}
 }
