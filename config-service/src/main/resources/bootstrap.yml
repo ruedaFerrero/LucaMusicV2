@@ -6,12 +6,11 @@ spring:
     config:
       server:
         git:
-
           uri: https://github.com/ruedaFerrero/LucaMusicV2.git
           searchPaths: config-data
           username: ${GIT_USER}
           password: ${GIT_PASSWORD}
-          default-label: main
+          default-label: order-service
   security:
     user:
       name: root
