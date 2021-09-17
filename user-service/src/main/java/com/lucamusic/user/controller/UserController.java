@@ -62,10 +62,9 @@ public class UserController {
 		
 		User user = userServ.findByID(id);
 		if(user == null){
-//			log.error("Event with id {} not found", id);
+			log.error("User with id {} not found", id);
 //			return ResponseEntity.notFound().build();
-			UserNotFoundException ex = new UserNotFoundException();
-			throw ex;
+			throw new UserNotFoundException();
 		}
 		return ResponseEntity.ok(user);
 	}
