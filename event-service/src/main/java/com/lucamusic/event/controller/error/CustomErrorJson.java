@@ -1,4 +1,4 @@
-package com.lucamusic.user.controller.error;
+package com.lucamusic.event.controller.error;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

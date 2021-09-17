@@ -1,4 +1,4 @@
-package com.lucamusic.user.controller.error;
+package com.lucamusic.event.controller.error;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -24,20 +24,19 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
-public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	
-	@ExceptionHandler(UserNotFoundException.class)
+	@ExceptionHandler(EventNotFoundException.class)
 	public void springHandleNotFound(HttpServletResponse response) throws IOException{
-		logger.info("------- UserNotFoundException() ");
-		// Salta a la clase CustomErrorAttributes para crear un error personalizado
+		logger.info("------- EventNotFoundException() ");
 		response.sendError(HttpStatus.NOT_FOUND.value());
 	}
 	
-
-	@ExceptionHandler({BadRequestException.class,
+	@ExceptionHandler({
+		BadRequestException.class,
 		org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class,
 		org.springframework.web.bind.MissingRequestHeaderException.class,
-		})
+	})
 	public void springHandleBadRequest(HttpServletResponse response) throws IOException{
 		logger.info("------- BadRequestException() ");
 		response.sendError(HttpStatus.BAD_REQUEST.value());
@@ -49,11 +48,11 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		response.sendError(HttpStatus.BAD_REQUEST.value());
 	}
 	
+
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request){
 		logger.info("------- handleMethodArgumentNotValid() ");
-		
 		CustomErrorJson customError = new CustomErrorJson();
 		
 		customError.setTimestamp(new Date());
@@ -69,10 +68,9 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		uri = uri.substring(uri.lastIndexOf("=")+1);
 		customError.setPath(uri);
 		
-		return new ResponseEntity<>(customError, headers, status);	
+		return new ResponseEntity<>(customError, headers, status);
 	}
 	
-	//Método llamado cuando se realiza una petición no existente
 	@Override
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request){
@@ -93,9 +91,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		return new ResponseEntity<Object>(body, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
 		
 	}
-	
-	
-	
 	
 
 }
