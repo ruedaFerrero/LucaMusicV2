@@ -1,8 +1,12 @@
 package com.lucamusic.event.service;
 
 import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.lucamusic.event.entity.Event;
 
+@Service
 public interface EventService {
 	public Event createEvent(Event event);
 	public Event getEventById(String id);
