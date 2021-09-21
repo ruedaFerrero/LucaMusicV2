@@ -25,14 +25,8 @@ import java.util.Map;
  */
 @Data
 public class Event {
-	
-	private String id;
 	@NotNull(message = "El campo nombre debe existir y no ser vacío") @NotBlank
 	private String name;
-
 	@NotNull (message = "El campo musicStyle debe existir")
 	private String musicStyle;
-	@PositiveOrZero(message = "El valor debe ser mayor o igual de 0")
-	private Integer ticketsSold = 0;
-
 }

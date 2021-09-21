@@ -21,9 +21,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 public class User {
-
-	Long id;
 	@NotNull(message = "El campo fullName no debe ser vacío")
 	String fullName;
-
 }

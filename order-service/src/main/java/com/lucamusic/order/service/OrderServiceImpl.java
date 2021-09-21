@@ -17,21 +17,10 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public Order createOrder(User user, Event event) {
-		Order order = new Order();
-		order.setUserName(user.getFullName());
-		order.setEventName(event.getName());
-		order.setMusicStyle(event.getMusicStyle());
-		order.setNumTickets(event.getTicketsSold());
-		System.out.println(order);
-		return order;
+		return Order.builder()
+				.eventName(event.getName())
+				.musicStyle(event.getMusicStyle())
+				.userName(user.getFullName())
+				.build();
 	}
-
-
-	@Override
-	public Order findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 }
