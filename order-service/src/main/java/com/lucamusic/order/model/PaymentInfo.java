@@ -6,5 +6,5 @@ import lombok.Data;
 public class PaymentInfo {
     private String creditCard;
     private String cvv;
-    private String fullName;
+    private String creditCardOwner;
 }
