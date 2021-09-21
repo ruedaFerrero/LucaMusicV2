@@ -13,7 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.lucamusic.order.entity.Order;
 import com.lucamusic.order.service.OrderService;
-import com.lucamusic.order.service.OrderServiceImpl;
 import com.lucamusic.order.utils.Utils;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -24,18 +23,38 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderController {
 
 	@Autowired
-	OrderServiceImpl serv;
-	
-	
+	private OrderService serv;
+
+
 	@PostMapping
-	public ResponseEntity<Order> createOrder( Order order, BindingResult result) {
-		
+	public ResponseEntity<Order> createOrder( @Valid @RequestBody Order order, BindingResult result) {
+
 		log.info("Creating Order: {}", order);
 		if(result.hasErrors()){
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
 		}
-		Order  orders = serv.createOrder(order);
-		return ResponseEntity.status(HttpStatus.CREATED).body(orders);
-		
+		Order  orderdb = serv.createOrder(order);
+		return ResponseEntity.status(HttpStatus.CREATED).body(orderdb);
+
 	}
+
+	//Tipo get
+	//le pasamos el usuario, evento, y tarjeta de credito
+	//pasa a la capa de servicio
+
+	/*@GetMapping
+	public ResponseEntity<Order> validateOrder(@RequestBody O, BindingResult result){
+
+		log.info("Validating oder: {}", user,event);
+		
+		Order orderDB=serv.validateOrder(user,event);
+
+
+
+		return ResponseEntity.ok(orderDB);
+		
+		//Llamada a guardar 
+
+	}*/
+
 }
