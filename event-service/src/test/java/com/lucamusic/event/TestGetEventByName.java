@@ -4,6 +4,9 @@ package com.lucamusic.event;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +27,7 @@ import com.lucamusic.event.service.EventServiceImpl;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(EventController.class)
-public class TestCreate {
+public class TestGetEventByName {
 
 	@Autowired
 	private EventService serv;
@@ -39,12 +42,13 @@ public class TestCreate {
 	
 	@MockBean
     private EventRepository repository;
-
-	@Test
-	void assertThatEventIsFound() throws Exception{
+	
+	@BeforeEach
+	public void setUp() {
 		
-		Event eventOut;
-		
+	String nameInserted = "name01";
+	List<Event> listaEvento = new ArrayList<>();
+	
 		Location location = Location.builder()
 				.address("a")
 				.capacity(5000)
@@ -54,15 +58,23 @@ public class TestCreate {
 				.location(location)
 				.shortDescription("shordfdf")
 				.musicStyle("genre")
-				.name("Test01")
+				.name(nameInserted)
 				.photoUrl("photoUrl")
 				.build();
-	   
-		Mockito.when(repository.save(eventCreated)).thenReturn(eventCreated); 
-			
-		eventOut = serv.createEvent(eventCreated);
 		
-		assertThat(eventCreated.getName()).contains(eventOut.getName());
+		listaEvento.add(eventCreated);
+	   
+		Mockito.when(repository.findAllByNameContaining(nameInserted)).thenReturn(listaEvento);
+	}
+
+	@Test
+	void assertThatEventIsFound() throws Exception{
+
+		String nameInserted = "name01";
+			
+		Event eventOut = serv.eventsFilteredByName(nameInserted).get(0);
+		
+		assertThat(eventOut.getName()).contains(nameInserted);
 
 	}
 }
