@@ -73,7 +73,8 @@ public class TestGetEventByMusicStyle {
 		String generoInserted = "Music Style";
 			
 		Event  eventOut = serv.findByMusicStyle(generoInserted).get(0);
-				assertThat(eventOut.getMusicStyle()).contains(generoInserted);
+		
+		assertThat(eventOut.getMusicStyle()).contains(generoInserted);
 
 	}
 }
