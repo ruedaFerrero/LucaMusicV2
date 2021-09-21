@@ -16,8 +16,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
-* Nombre de la clase: User
- * Esta clase es la entidad (Objeto Usuario)
+* Nombre de la clase: DAOUser
+ Esta clase es la entidad (Objeto Usuario)
  * @author:Emanuel
  * @version: 14/09/2021/v1
  */
@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @Table(name = "users") @NoArgsConstructor @AllArgsConstructor
-public class User implements Serializable {
+public class DAOUser implements Serializable {
 	@Id @GeneratedValue(strategy=GenerationType.AUTO)
 	Long id;
 	@NotNull(message = "El campo fullName no debe ser vacío")
@@ -36,4 +36,5 @@ public class User implements Serializable {
 	String password;
 	LocalDate registerDate;
 	private String status;
+        private String role;
 }

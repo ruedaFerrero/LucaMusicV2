@@ -1,9 +1,9 @@
 server:
-  port: 8092
+  port: 8093
   error:
     include-message: always
     include-binding-errors: always
-    include-stack: never
+    include-stacktrace: never
 jwt:
   secret: lucamusic
   jwtExpirationInMs: 18000000
