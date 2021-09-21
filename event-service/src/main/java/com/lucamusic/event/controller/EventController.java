@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lucamusic.event.controller.error.EventNotFoundException;
 import com.lucamusic.event.entity.Event;
 import com.lucamusic.event.service.EventService;
 import org.springframework.web.server.ResponseStatusException;
@@ -85,7 +87,8 @@ public class EventController {
 		Event event = serv.getEventById(id);
 		if (event == null) {
 			log.error("Event with id {} not found", id);
-			return ResponseEntity.notFound().build();
+//			return ResponseEntity.notFound().build();
+			throw new EventNotFoundException();
 		}
 		return ResponseEntity.ok(event);
 	}
@@ -100,6 +103,8 @@ public class EventController {
 	@PostMapping
 	public ResponseEntity<Event> createEvent(@Valid @RequestBody Event event, BindingResult result) {
 		log.info("Creating Event: {}", event);
+		//si hay un error, debe saltar una excepción antes de entrar
+		//que captura el CustomGlobalExceptionHandler
 		if (result.hasErrors()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
 		}
@@ -125,7 +130,8 @@ public class EventController {
 		Event eventUpdated = serv.modifyEvent(event);
 		if (eventUpdated == null) {
 			log.error("Unable to update. No Event with id {}", id);
-			return ResponseEntity.notFound().build();
+//			return ResponseEntity.notFound().build();
+			throw new EventNotFoundException();
 		}
 		return ResponseEntity.ok(eventUpdated);
 	}
@@ -143,9 +149,19 @@ public class EventController {
 		Event eventDeleted = serv.getEventById(id);
 		if (eventDeleted == null) {
 			log.error("Unable to delete. No Event with id {}", id);
-			return ResponseEntity.notFound().build();
+//			return ResponseEntity.notFound().build();
+			throw new EventNotFoundException();
 		}
 		eventDeleted = serv.deleteEvent(eventDeleted);
 		return ResponseEntity.ok(eventDeleted);
 	}
+	
+	
+	@GetMapping("/name")
+	public ResponseEntity <List<Event>> findByName(@RequestBody Event event, String name) {
+		List<Event> events = serv.eventsFilteredByName(name);
+		return ResponseEntity.ok(serv.eventsFilteredByName(name));
+	}
+	
+	
 }

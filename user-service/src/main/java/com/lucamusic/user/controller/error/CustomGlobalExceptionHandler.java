@@ -19,6 +19,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -30,6 +31,16 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		logger.info("------- UserNotFoundException() ");
 		// Salta a la clase CustomErrorAttributes para crear un error personalizado
 		response.sendError(HttpStatus.NOT_FOUND.value());
+	}
+	
+
+	@ExceptionHandler({BadRequestException.class,
+		org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class,
+		org.springframework.web.bind.MissingRequestHeaderException.class,
+		})
+	public void springHandleBadRequest(HttpServletResponse response) throws IOException{
+		logger.info("------- BadRequestException() ");
+		response.sendError(HttpStatus.BAD_REQUEST.value());
 	}
 	
 	@ExceptionHandler(ConstraintViolationException.class)
@@ -82,5 +93,9 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		return new ResponseEntity<Object>(body, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
 		
 	}
+	
+	
+	
+	
 
 }

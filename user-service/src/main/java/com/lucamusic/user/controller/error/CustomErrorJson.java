@@ -58,4 +58,17 @@ public class CustomErrorJson {
 		this.timestamp = changeTimestamp(timestamp);
 	}
 	
+	@Override
+	public String toString() {
+		return "ErrorMessage{" +
+				"Timestamp='" + timestamp + '\'' +
+				"Status='" + status + '\'' +
+				"Error='" + error + '\'' +
+				"Message='" + message + '\'' +
+				"Path='" + path + '\'' +
+				"Jdk='" + jdk + '\'' +
+				'}';
+				
+	}
+	
 }

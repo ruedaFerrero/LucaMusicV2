@@ -33,11 +33,13 @@ public class EventServiceImpl implements EventService {
 		if(eventDB != null){
 			System.out.println(event.getId());
 			return eventDB;
+		}else {
+			log.info("Creating event...");
+			event.setStatus("CREATED");
+			return eventRepository.save(event);
 		}
 
-		log.info("Creating event...");
-		event.setStatus("CREATED");
-		return eventRepository.save(event);
+		
 	}
 
 	/**

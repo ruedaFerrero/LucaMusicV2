@@ -32,6 +32,7 @@ public class CustomErrorAttributes extends DefaultErrorAttributes {
 			errorAttributes.put("timestamp", dateFormat.format((Date) timestamp));
 		}
 		
+		errorAttributes.remove("trace");
 		errorAttributes.put("jdk", System.getProperty("java.version"));
 		
 		return errorAttributes;

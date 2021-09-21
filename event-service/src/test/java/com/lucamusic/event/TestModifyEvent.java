@@ -1,66 +1,77 @@
 //package com.lucamusic.event;
 //
-//import static org.mockito.Mockito.when;
-//import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-//import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 //
+//
+//import static org.assertj.core.api.Assertions.assertThat;
+//
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.Test;
 //import org.junit.jupiter.api.extension.ExtendWith;
+//import org.mockito.Mockito;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 //import org.springframework.boot.test.context.TestConfiguration;
 //import org.springframework.boot.test.mock.mockito.MockBean;
 //import org.springframework.context.annotation.Bean;
-//import org.springframework.http.MediaType;
 //import org.springframework.test.context.junit.jupiter.SpringExtension;
-//import org.springframework.test.web.servlet.MockMvc;
-//
-//import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.lucamusic.event.controller.EventController;
 //import com.lucamusic.event.entity.Event;
+//import com.lucamusic.event.entity.Location;
 //import com.lucamusic.event.repository.EventRepository;
 //import com.lucamusic.event.service.EventService;
 //import com.lucamusic.event.service.EventServiceImpl;
+//
 //
 //@ExtendWith(SpringExtension.class)
 //@WebMvcTest(EventController.class)
 //public class TestModifyEvent {
 //
 //	@Autowired
-//	private MockMvc mockMvc;
-//
+//	private EventService serv;
+//	
 //	@TestConfiguration
-//	static class TestModifyEventConfiguration {
+//    static class configuration{
 //		@Bean
-//		public EventService eventService() {
-//			return new EventServiceImpl();
-//		}
+//	    public EventService eventService() {
+//	        return new EventServiceImpl();
+//	    }
 //	}
-//
-//	@Autowired
-//	private EventService eventService;
-//
+//	
 //	@MockBean
-//	private EventRepository eventRepository;
+//    private EventRepository repository;
 //
 //	@Test
-//	void assertThatEventIsModified() throws Exception{
-//		Event event = Event.builder().build();
+//	void assertThatEventIsFound() throws Exception{
+//		
+//		List<Event> listaEvento = new ArrayList<>();
 //
-//		when(eventService.modifyEvent(event)).thenReturn(event);
+//		String name = "name";
+//		String name2 = "qwer";
+//		
+//		Location location = Location.builder()
+//				.address("a")
+//				.capacity(5000)
+//				.name("b")
+//				.build();
+//		Event eventCreated = Event.builder()
+//				.location(location)
+//				.shortDescription("shordfdf")
+//				.musicStyle("genre")
+//				.name(name)
+//				.photoUrl("photoUrl")
+//				.build();
+//	   
+//		Mockito.when(repository.findByName(name)).thenReturn(eventCreated);
+//		
+//		Event eventNoEdited = eventCreated;
+//		listaEvento.add(eventCreated);
+//		listaEvento.add(eventNoEdited);
+//		eventCreated.setName(name2);
+//		
+//		assertThat(serv.eventsFilteredByName(name2).get(0).getName()).doesNotContain(serv.eventsFilteredByName(name2).get(1).getName());
 //
-//		mockMvc
-//			.perform(put("/events/{id}")
-//					.contentType(MediaType.APPLICATION_JSON)
-//					.content(asJsonString(event)))
-//			.andExpect(status().isOk());
-//	}
-//
-//	public static String asJsonString(final Event event) {
-//	    try {
-//	        return new ObjectMapper().writeValueAsString(event);
-//	    } catch (Exception e) {
-//	        throw new RuntimeException(e);
-//	    }
 //	}
 //}

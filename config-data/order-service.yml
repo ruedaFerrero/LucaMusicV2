@@ -1,0 +1,12 @@
+server:
+  port: 8093
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stack: never
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8099/eureka/
