@@ -1,7 +1,6 @@
 package com.lucamusic.order.controller;
 
-import javax.validation.Valid;
-
+import com.lucamusic.order.model.OrderInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,17 +24,12 @@ public class OrderController {
 	private OrderService serv;
 
 	@GetMapping
-	public ResponseEntity<Order> createOrder(@RequestBody User user,@RequestBody Event event, BindingResult result) {
-		log.info("Creating Order with User {} and Event {}", user,event);
+	public ResponseEntity<Order> createOrder(@RequestBody OrderInfo info, BindingResult result) {
+		log.info("Creating Order with User {} and Event {}", info.getUser(),info.getEvent());
 		if(result.hasErrors()){
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
 		}
-		Order  order = serv.createOrder(user,event);
+		Order  order = serv.createOrder(info.getUser(),info.getEvent());
 		return ResponseEntity.status(HttpStatus.CREATED).body(order);
 	}
-	
-	
-
-
-
 }
