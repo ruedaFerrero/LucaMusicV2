@@ -28,8 +28,7 @@ public class OrderController {
 	@Autowired
 	private OrderService serv;
 
-	//Pasarle Objectos User, Evento
-	//Pasa a la capa de servicio
+	
 
 	@PostMapping
 	public ResponseEntity<Order> createOrder(User user, Event event, BindingResult result) {
