@@ -1,4 +1,4 @@
-package com.lucamusic.order.entity;
+package com.lucamusic.order.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -20,18 +20,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+
 @Data
-@Table(name="orders")@NoArgsConstructor @AllArgsConstructor
-public class Order implements Serializable {
+public class Order {
 
-	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-	Long id;
-
-	private Long userId;
-	private String userName;
-	private int ccv;
-	private Long eventId;
-	private String eventName;
+	
 	private String status;
+	private Long userId;
+	private String eventId;
 }
