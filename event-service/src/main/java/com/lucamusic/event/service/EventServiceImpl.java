@@ -29,9 +29,7 @@ public class EventServiceImpl implements EventService {
 	 */
 	@Override
 	public Event createEvent(Event event) {
-		log.info("---- accediendo al metodo createEvent");
 		Event eventDB = eventRepository.findByName(event.getName());
-		log.info("----"+event);
 		if(eventDB != null){
 			System.out.println(event.getId());
 			return eventDB;
