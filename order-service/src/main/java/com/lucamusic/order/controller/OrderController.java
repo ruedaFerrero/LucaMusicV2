@@ -29,7 +29,7 @@ public class OrderController {
 		if(result.hasErrors()){
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
 		}
-		Order  order = serv.createOrder(info.getUser(),info.getEvent());
+		Order  order = serv.createOrder(info);
 		return ResponseEntity.status(HttpStatus.CREATED).body(order);
 	}
 }

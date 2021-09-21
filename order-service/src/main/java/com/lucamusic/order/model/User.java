@@ -1,15 +1,7 @@
 package com.lucamusic.order.model;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-
-
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
 * Nombre de la clase: User
@@ -17,7 +9,6 @@ import lombok.NoArgsConstructor;
  * @author:Emanuel
  * @version: 14/09/2021/v1
  */
-
 
 @Data
 public class User {

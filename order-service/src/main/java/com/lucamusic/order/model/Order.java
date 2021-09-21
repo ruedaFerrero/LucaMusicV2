@@ -13,4 +13,5 @@ public class Order {
 	private String eventName;
 	private String musicStyle;
 	private int numTickets;
+	private String status;
 }
