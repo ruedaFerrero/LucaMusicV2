@@ -27,7 +27,7 @@ import com.lucamusic.event.service.EventServiceImpl;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(EventController.class)
-public class TestGetEventFiltered {
+public class TestGetEventByMusicStyle {
 
 	@Autowired
 	private EventService serv;
@@ -72,8 +72,9 @@ public class TestGetEventFiltered {
 
 		String generoInserted = "Music Style";
 			
-	Event  eventOut = serv.findByMusicStyle(generoInserted).get(0);
-					assertThat(eventOut.getMusicStyle()).contains(generoInserted);
+		Event  eventOut = serv.findByMusicStyle(generoInserted).get(0);
+		
+		assertThat(eventOut.getMusicStyle()).contains(generoInserted);
 
 	}
 }
