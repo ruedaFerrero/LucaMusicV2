@@ -1,15 +1,11 @@
 package com.lucamusic.order.controller;
 
-import javax.validation.Valid;
-
+import com.lucamusic.order.model.OrderInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.lucamusic.order.model.Event;
@@ -18,7 +14,6 @@ import com.lucamusic.order.model.User;
 import com.lucamusic.order.service.OrderService;
 import com.lucamusic.order.utils.Utils;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
@@ -28,23 +23,13 @@ public class OrderController {
 	@Autowired
 	private OrderService serv;
 
-	
-
-	@PostMapping
-	public ResponseEntity<Order> createOrder(User user, Event event, BindingResult result) {
-
-		log.info("Creating Order: {}", user,event);
+	@GetMapping
+	public ResponseEntity<Order> createOrder(@RequestBody OrderInfo info, BindingResult result) {
+		log.info("Creating Order with User {} and Event {}", info.getUser(),info.getEvent());
 		if(result.hasErrors()){
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
 		}
-	
-		Order  orderdb = serv.createOrder(user,event);
-		return ResponseEntity.status(HttpStatus.CREATED).body(orderdb);
-
+		Order  order = serv.createOrder(info.getUser(),info.getEvent());
+		return ResponseEntity.status(HttpStatus.CREATED).body(order);
 	}
-	
-	
-
-
-
 }

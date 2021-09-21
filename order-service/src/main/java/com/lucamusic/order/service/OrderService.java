@@ -7,8 +7,6 @@ import com.lucamusic.order.model.User;
 
 
 public interface OrderService {
-
-	public Order findById(Long id);
 	public Order createOrder(User user, Event event);
 	
 	

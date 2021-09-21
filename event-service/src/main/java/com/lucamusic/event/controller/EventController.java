@@ -158,7 +158,7 @@ public class EventController {
 	
 	
 	@GetMapping("/name")
-	public ResponseEntity <List<Event>> findByName(@RequestBody Event event,String name ) {
+	public ResponseEntity <List<Event>> findByName(@RequestBody Event event, String name) {
 		List<Event> events = serv.eventsFilteredByName(name);
 		return ResponseEntity.ok(serv.eventsFilteredByName(name));
 	}
