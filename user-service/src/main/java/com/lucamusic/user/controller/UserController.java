@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,8 +51,7 @@ public class UserController {
         
         @PostMapping("/authenticate")
         public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
-                        throws Exception {
-
+                throws Exception {
                 try {
                         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                                         authenticationRequest.getEmail(), authenticationRequest.getPassword()));
@@ -95,11 +95,14 @@ public class UserController {
 		}
 		return ResponseEntity.ok(user);
 	}
-        @GetMapping("/hellouser")
+    @Secured({"USER", "ADMIN"})
+    @GetMapping("/hellouser")
 	public ResponseEntity<String> helloUser(){
             return ResponseEntity.ok("Hello user");
 	}
-        @GetMapping("/helloadmin")
+
+    @Secured("ADMIN")
+    @GetMapping("/helloadmin")
 	public ResponseEntity<String> helloAdmin(){
             return ResponseEntity.ok("Hello Admin");
 	}
