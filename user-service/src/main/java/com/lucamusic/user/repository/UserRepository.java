@@ -3,7 +3,7 @@ package com.lucamusic.user.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.lucamusic.user.entity.User;
+import com.lucamusic.user.entity.DAOUser;
 
 import java.util.List;
 
@@ -14,6 +14,6 @@ import java.util.List;
  * @version 14/09/2021/v1
  */
 @Repository
-public interface UserRepository extends JpaRepository<User,Long>{
-    public User findByEmail(String email);
+public interface UserRepository extends JpaRepository<DAOUser,Long>{
+    public DAOUser findByEmail(String email);
 }
