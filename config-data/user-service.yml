@@ -5,7 +5,7 @@ server:
     include-binding-errors: always
     include-stack: never
 jwt:
-  secret: lucamusic
+  secret: D9CEBEC7F8D5F695FCF72B8F71699AB5BB2850ADF304DB376654FF55AC312C901030EB61BD2533198173221F3C690DABF4925E0E180D7EF324DC7D06C8AED438
   jwtExpirationInMs: 18000000
 spring:
   datasource:

@@ -6,6 +6,7 @@
 package com.lucamusic.event.utils;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.SignatureException;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -57,7 +58,8 @@ public class JwtUtil {
     
     public boolean validateToken(String authToken) {
 		try {
-			Jws<Claims> claiJwsms = Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken);
+
+			Jws<Claims> claiJwsms = Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(authToken);
 			return true;
 		} catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
 			throw new BadCredentialsException("INVALID_CREDENTIALS", ex);
@@ -67,14 +69,14 @@ public class JwtUtil {
 	}
 
     public String getUsernameFromToken(String token) {
-            Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+            Claims claims = Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(token).getBody();
 
             return claims.getSubject();
     }
 
     public List<SimpleGrantedAuthority> getRolesFromToken(String authToken) {
             List<SimpleGrantedAuthority> roles = null;
-            Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken).getBody();
+            Claims claims = Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(authToken).getBody();
             Boolean isAdmin = claims.get("isAdmin", Boolean.class);
             Boolean isUser = claims.get("isUser", Boolean.class);
             if (isAdmin != null && isAdmin == true) {
