@@ -18,7 +18,7 @@ public class PaymentController {
     @Autowired
     PaymentService service;
 
-    @PostMapping("/")
+    @GetMapping("/")
     public ResponseEntity<Response> validatePayment(@Valid @RequestBody Account account, BindingResult result){
     	log.info("Validating Account: {}", account);
     	Boolean cvvIsValid;

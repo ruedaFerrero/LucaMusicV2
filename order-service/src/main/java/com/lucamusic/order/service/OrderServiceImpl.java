@@ -1,12 +1,16 @@
 package com.lucamusic.order.service;
 
 import com.lucamusic.order.model.Event;
+import com.lucamusic.order.model.EventResponse;
 import com.lucamusic.order.model.Order;
 import com.lucamusic.order.model.OrderInfo;
 import com.lucamusic.order.model.User;
+import com.lucamusic.order.model.UserResponse;
 import com.lucamusic.order.model.PaymentResponse;
 import com.lucamusic.order.model.PaymentInfo;
 import lombok.SneakyThrows;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +19,10 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 @Service
 public class OrderServiceImpl implements OrderService {
+	
+	@Autowired
+	private RestTemplate restTemplate;
+	
 	/**
 	 * Creates an order
 	 * @param info
@@ -22,9 +30,10 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	@SneakyThrows
 	@Override
-	public Order createOrder(OrderInfo info) {
-		User user = info.getUser();
-		Event event = info.getEvent();
+	public Order createOrder(String eventId, String userId, OrderInfo info) {
+		final UserResponse user = restTemplate.getForObject("http://users/" + userId, UserResponse.class);
+		final EventResponse event = restTemplate.getForObject("http://events/" + eventId, EventResponse.class);
+		
 		Order order = Order.builder()
 				.eventName(event.getName())
 				.musicStyle(event.getMusicStyle())
