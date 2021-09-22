@@ -119,6 +119,7 @@ public class EventController {
 	 * @return ResponseEntity 200, OK
 	 * @author Edgar
 	 */
+//	@Secured
 	@PutMapping("/{id}")
 	public ResponseEntity<Event> modifyEvent(@PathVariable("id") String id, @Valid @RequestBody Event event,
 			BindingResult result) {

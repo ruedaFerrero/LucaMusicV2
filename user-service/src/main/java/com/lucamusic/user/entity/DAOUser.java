@@ -26,7 +26,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Table(name = "users") @NoArgsConstructor @AllArgsConstructor
 public class DAOUser implements Serializable {
-	@Id @GeneratedValue(strategy=GenerationType.AUTO)
+	@Id @GeneratedValue(strategy=GenerationType.IDENTITY)
 	Long id;
 	@NotNull(message = "El campo fullName no debe ser vacío")
 	String fullName;
@@ -36,5 +36,5 @@ public class DAOUser implements Serializable {
 	String password;
 	LocalDate registerDate;
 	private String status;
-        private String role;
+	private String role;
 }

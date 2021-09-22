@@ -77,12 +77,12 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CREATED).body(userDB);
         }
 
-
 	/**
 	 * Método para obtener la información de un usuario
 	 * @param id Id del usuario
 	 * @return Usuario + status 200, 404 si no existe
 	 */
+
 	@GetMapping("/{id}")
 	public ResponseEntity<DAOUser> getUserById(@PathVariable("id") Long id){
 		log.info("Fetching User with id {}", id);
@@ -95,13 +95,14 @@ public class UserController {
 		}
 		return ResponseEntity.ok(user);
 	}
-    @Secured({"USER", "ADMIN"})
+
+    @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @GetMapping("/hellouser")
 	public ResponseEntity<String> helloUser(){
             return ResponseEntity.ok("Hello user");
 	}
 
-    @Secured("ADMIN")
+    @Secured("ROLE_ADMIN")
     @GetMapping("/helloadmin")
 	public ResponseEntity<String> helloAdmin(){
             return ResponseEntity.ok("Hello Admin");
