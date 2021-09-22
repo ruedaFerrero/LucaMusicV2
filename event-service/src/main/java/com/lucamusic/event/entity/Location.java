@@ -1,7 +1,5 @@
 package com.lucamusic.event.entity;
 
-import java.io.Serializable;
-
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,7 +13,7 @@ import javax.validation.constraints.PositiveOrZero;
  * 
  */
 @Data @Builder
-public class Location implements Serializable {
+public class Location{
 	@NotNull
 	private String name;
 	@NotNull

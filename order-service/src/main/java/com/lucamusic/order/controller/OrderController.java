@@ -39,12 +39,12 @@ public class OrderController {
 	 * @author Emanuel
 	 */
 	@GetMapping
-	public ResponseEntity<Order> createOrder(@RequestBody OrderInfo info, BindingResult result) {
-		log.info("Creating Order with User {} and Event {}", info.getUser(),info.getEvent());
+	public ResponseEntity<Order> createOrder(@RequestBody String eventId, String userId, OrderInfo info, BindingResult result) {
+//		log.info("Creating Order with User {} and Event {}", info.getUser(),info.getEvent());
 		if(result.hasErrors()){
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
 		}
-		Order  order = serv.createOrder(info);
+		Order  order = serv.createOrder(eventId, userId, info);
 		return ResponseEntity.status(HttpStatus.CREATED).body(order);
 	}
 }
