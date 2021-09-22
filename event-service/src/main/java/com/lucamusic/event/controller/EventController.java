@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -50,6 +51,7 @@ public class EventController {
 	 * @return List<Event>
 	 * @author Jose Antonio
 	 */
+	@Secured("ROLE_USER")
 	@GetMapping
 	public ResponseEntity<List<Event>> getEvents(@RequestParam (required = false, name = "musicStyle")String musicStyle, @RequestParam (required = false, name = "name")String name ) {
 		log.info("Fetching all Events");
@@ -119,7 +121,6 @@ public class EventController {
 	 * @return ResponseEntity 200, OK
 	 * @author Edgar
 	 */
-//	@Secured
 	@PutMapping("/{id}")
 	public ResponseEntity<Event> modifyEvent(@PathVariable("id") String id, @Valid @RequestBody Event event,
 			BindingResult result) {

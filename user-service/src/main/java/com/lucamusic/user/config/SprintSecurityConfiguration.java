@@ -27,7 +27,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-public class SprintSecurityConfiguration   extends WebSecurityConfigurerAdapter{
+public class SprintSecurityConfiguration extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	CustomUserDetailsService userDetailsService;
