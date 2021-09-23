@@ -9,13 +9,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 /**
  *
  * @author miso
  */
 @Data @NoArgsConstructor @AllArgsConstructor
 public class AuthenticationRequest {
+    @NotNull @NotEmpty
     private String email;
+    @NotNull @NotEmpty
     private String password;
-    
 }

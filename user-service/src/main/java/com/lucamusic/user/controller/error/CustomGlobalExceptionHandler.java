@@ -22,9 +22,23 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+/**
+ * CustomGlobalExceptionHandler
+ * Clase que gestiona los errores del microservicio
+ * 
+ * @author Jose
+ * @version 1.0 Septiembre 2021
+ *
+ */
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	
+	/**
+	 * springHandleNotFound
+	 * Método que gestiona el error de User no encontrado
+	 * @param response HttpServletResponse
+	 * @throws IOException
+	 */
 	@ExceptionHandler(UserNotFoundException.class)
 	public void springHandleNotFound(HttpServletResponse response) throws IOException{
 		logger.info("------- UserNotFoundException() ");
@@ -32,7 +46,15 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		response.sendError(HttpStatus.NOT_FOUND.value());
 	}
 	
-
+	/**
+	 * springHandleBadRequest
+	 * Método que gestiona el error Bad Request
+	 * 
+	 * @param response HttpServletResponse
+	 * @throws IOException
+	 * @author Jose Antonio
+	 * @version 1.0 Septiembre 2021
+	 */
 	@ExceptionHandler({BadRequestException.class,
 		org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class,
 		org.springframework.web.bind.MissingRequestHeaderException.class,
@@ -42,6 +64,15 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		response.sendError(HttpStatus.BAD_REQUEST.value());
 	}
 	
+	/**
+	 * constraintViolationException
+	 * Método que gestiona el error de violación de restricciones
+	 * 
+	 * @param response HttpServletResponse
+	 * @throws IOException
+	 * @author Jose Antonio
+	 * @version 1.0 Septiembre 2021
+	 */
 	@ExceptionHandler(ConstraintViolationException.class)
 	public void constraintViolationException(HttpServletResponse response) throws IOException{
 		logger.info("------- ConstraintViolationException() ");
@@ -75,9 +106,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 	@Override
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request){
-		
 		logger.info("------- handleRequestMethodNotSupported() ");
-		
 		StringBuilder builder = new StringBuilder();
 		builder.append(ex.getMethod());
 		builder.append(" no es un método válido para esta petición. Los métodos válidos son ");
@@ -90,11 +119,5 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		body.put("message", builder.toString());
 		
 		return new ResponseEntity<Object>(body, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
-		
 	}
-	
-	
-	
-	
-
 }

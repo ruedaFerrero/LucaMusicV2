@@ -8,6 +8,14 @@ import java.util.List;
 
 import lombok.Data;
 
+/**
+ * CustomErrorJson
+ * Json personalizado en el que se guarda la información de un error
+ * 
+ * @author Jose Antonio
+ * @version 1.0 Septiembre 2021
+ *
+ */
 @Data
 public class CustomErrorJson {
 	
