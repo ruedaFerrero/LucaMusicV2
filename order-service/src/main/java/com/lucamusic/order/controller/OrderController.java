@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,8 +48,9 @@ public class OrderController {
         return null;
     }
 	
+	@Secured({"ROLE_USER", 	"ROLE_ADMIN"})
 	@GetMapping
-	public ResponseEntity<Order> createOrder(@RequestBody OrderInfo info, @RequestParam (name="eventId")String eventId, @RequestParam (name= "userId") String userId,HttpServletRequest request, BindingResult result) {
+	public ResponseEntity<Order> createOrder(@RequestBody OrderInfo info, HttpServletRequest request, BindingResult result) {
 	
 	
 		String extractToken=extractJwtFromRequest(request);
@@ -58,7 +60,7 @@ public class OrderController {
 		if(result.hasErrors()){
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
 		}
-		Order  order = serv.createOrder(eventId, userId, info,extractToken);
+		Order  order = serv.createOrder(info,extractToken);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(order);
 	}

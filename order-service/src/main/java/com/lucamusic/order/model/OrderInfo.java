@@ -13,4 +13,6 @@ import lombok.Data;
 public class OrderInfo {
     private PaymentInfo paymentInfo;
     private int numTickets;
+    private String eventId;
+    private String userId;
 }

@@ -34,20 +34,17 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	@SneakyThrows
 	@Override
-	public Order createOrder(String eventId, String userId, OrderInfo info, String extractToken) {
+	public Order createOrder(OrderInfo info, String extractToken) {
 		
 		HttpHeaders headers= new HttpHeaders();
 		headers.add("Authorization", "Bearer " + extractToken);
 		HttpEntity<String> request = new HttpEntity<String>(headers);
 		System.out.println(request);
 	
-		final ResponseEntity<UserResponse> user = restTemplate.exchange("http://user-service/users/" + userId, HttpMethod.GET, request, UserResponse.class);	
+		final ResponseEntity<UserResponse> user = restTemplate.exchange("http://user-service/users/" + info.getUserId(), HttpMethod.GET, request, UserResponse.class);	
 		user.getBody();
 		
-		final EventResponse event = restTemplate.getForObject("http://event-service/events/" + eventId, EventResponse.class);
-		
-		
-
+		final EventResponse event = restTemplate.getForObject("http://event-service/events/" + info.getEventId(), EventResponse.class);
 		
 		Order order = Order.builder()
 				.eventName(event.getName())
@@ -56,7 +53,6 @@ public class OrderServiceImpl implements OrderService {
 				.numTickets(info.getNumTickets())
 				.build();
 
-		
 		
 		String operationStatus = validateOrder(info.getPaymentInfo()).getStatus();
 		if(operationStatus.equals("Valid account")){
