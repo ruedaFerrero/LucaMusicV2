@@ -31,15 +31,15 @@ public class EventServiceImpl implements EventService {
 	public Event createEvent(Event event) {
 		Event eventDB = eventRepository.findByName(event.getName());
 		if(eventDB != null){
-			System.out.println(event.getId());
-			return eventDB;
-		}else {
-			log.info("Creating event...");
-			event.setStatus("CREATED");
-			return eventRepository.save(event);
+			if(eventDB.getStatus().equals("DELETED"))
+				eventRepository.delete(eventDB);
+			else
+				return eventDB;
 		}
 
-		
+		log.info("Creating event...");
+		event.setStatus("CREATED");
+		return eventRepository.save(event);
 	}
 
 	/**
@@ -59,7 +59,7 @@ public class EventServiceImpl implements EventService {
 	 */
 	@Override
 	public List<Event> findByMusicStyle(String musicStyle) {
-		return eventRepository.findByMusicStyle(musicStyle);
+		return eventRepository.findByMusicStyleContainingAndStatusEquals(musicStyle, "CREATED");
 	}
 
 
@@ -70,7 +70,10 @@ public class EventServiceImpl implements EventService {
 	 */
 	@Override
 	public Event getEventById(String id) {
-		return eventRepository.findById(id).orElse(null);
+		Event event = eventRepository.findById(id).orElse(null);
+		if(event.getStatus().equals("DELETED"))
+			return null;
+		return event;
 	}
 
 	/**
@@ -134,7 +137,7 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public List<Event> eventsFilteredByName(String name){
-		return eventRepository.findAllByNameContaining(name);
+		return eventRepository.findAllByNameContainingAndStatusEquals(name, "CREATED");
 		}
 
 	@Override

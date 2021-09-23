@@ -64,7 +64,7 @@ public class TestGetEventByMusicStyle {
 		
 		listaEvento.add(eventCreated);
 	   
-		Mockito.when(repository.findByMusicStyle(generoInserted)).thenReturn(listaEvento); 
+		Mockito.when(repository.findByMusicStyleContainingAndStatusEquals(generoInserted, "CREATED")).thenReturn(listaEvento);
 	}
 
 	@Test

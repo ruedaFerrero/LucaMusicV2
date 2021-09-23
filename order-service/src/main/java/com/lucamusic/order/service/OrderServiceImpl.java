@@ -1,10 +1,8 @@
 package com.lucamusic.order.service;
 
-import com.lucamusic.order.model.Event;
 import com.lucamusic.order.model.EventResponse;
 import com.lucamusic.order.model.Order;
 import com.lucamusic.order.model.OrderInfo;
-import com.lucamusic.order.model.User;
 import com.lucamusic.order.model.UserResponse;
 import com.lucamusic.order.model.PaymentResponse;
 import com.lucamusic.order.model.PaymentInfo;
@@ -40,11 +38,8 @@ public class OrderServiceImpl implements OrderService {
 		headers.add("Authorization", "Bearer " + extractToken);
 		HttpEntity<String> request = new HttpEntity<String>(headers);
 		System.out.println(request);
-	
 
 		final ResponseEntity<UserResponse> user = restTemplate.exchange("http://user-service/users/" + info.getUserId(), HttpMethod.GET, request, UserResponse.class);
-//		user.getBody();
-		
 		final ResponseEntity<EventResponse> event = restTemplate.exchange("http://event-service/events/" + info.getEventId(), HttpMethod.GET, request, EventResponse.class);
 		
 		Order order = Order.builder()
@@ -73,8 +68,5 @@ public class OrderServiceImpl implements OrderService {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		return restTemplate.postForObject("http://localhost:8050/" , paymentInfo,PaymentResponse.class);
-		
-		
-		
 	}
 }

@@ -55,21 +55,19 @@ public class EventController {
 	@GetMapping
 	public ResponseEntity<List<Event>> getEvents(@RequestParam (required = false, name = "musicStyle")String musicStyle, @RequestParam (required = false, name = "name")String name ) {
 		log.info("Fetching all Events");
-
 		List<Event> events;
-		//Comprobar también que el estado del evento es siempre "created"
 		if(musicStyle != null && name != null) {
 			events = serv.findAllFiltered(name, musicStyle);
-			
 		}else if (name != null){
 			events = serv.eventsFilteredByName(name);
 		}else if (musicStyle != null) {
 			events = serv.findByMusicStyle(musicStyle);
 		}else {
 			events = serv.eventsByStatus("CREATED");
-			if (events.isEmpty()) {
-				return ResponseEntity.noContent().build();
-			}
+		}
+
+		if (events.isEmpty()) {
+			return ResponseEntity.noContent().build();
 		}
 		
 		return ResponseEntity.ok(events);
@@ -106,8 +104,6 @@ public class EventController {
 	@PostMapping
 	public ResponseEntity<Event> createEvent(@Valid @RequestBody Event event, BindingResult result) {
 		log.info("Creating Event: {}", event);
-		//si hay un error, debe saltar una excepción antes de entrar
-		//que captura el CustomGlobalExceptionHandler
 		if (result.hasErrors()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
 		}
@@ -124,8 +120,7 @@ public class EventController {
 	 */
 	@Secured("ROLE_ADMIN")
 	@PutMapping("/{id}")
-	public ResponseEntity<Event> modifyEvent(@PathVariable("id") String id, @Valid @RequestBody Event event,
-			BindingResult result) {
+	public ResponseEntity<Event> modifyEvent(@PathVariable("id") String id, @Valid @RequestBody Event event, BindingResult result) {
 		log.info("Updating with id {}", id);
 		if (result.hasErrors()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
@@ -134,7 +129,6 @@ public class EventController {
 		Event eventUpdated = serv.modifyEvent(event);
 		if (eventUpdated == null) {
 			log.error("Unable to update. No Event with id {}", id);
-//			return ResponseEntity.notFound().build();
 			throw new EventNotFoundException();
 		}
 		return ResponseEntity.ok(eventUpdated);
@@ -154,11 +148,9 @@ public class EventController {
 		Event eventDeleted = serv.getEventById(id);
 		if (eventDeleted == null) {
 			log.error("Unable to delete. No Event with id {}", id);
-//			return ResponseEntity.notFound().build();
 			throw new EventNotFoundException();
 		}
 		eventDeleted = serv.deleteEvent(eventDeleted);
 		return ResponseEntity.ok(eventDeleted);
 	}
-	
 }

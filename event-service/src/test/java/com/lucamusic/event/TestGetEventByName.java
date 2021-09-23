@@ -63,8 +63,7 @@ public class TestGetEventByName {
 				.build();
 		
 		listaEvento.add(eventCreated);
-	   
-		Mockito.when(repository.findAllByNameContaining(nameInserted)).thenReturn(listaEvento);
+		Mockito.when(repository.findAllByNameContainingAndStatusEquals(nameInserted, "CREATED")).thenReturn(listaEvento);
 	}
 
 	@Test
