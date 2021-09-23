@@ -14,6 +14,14 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.lucamusic.user.controller.UserController;
 
+/**
+ * CustomErrorAttributes
+ * Clase que devuelve los atributos del error
+ * 
+ * @author Jose Antonio
+ * @version 1.0 Septiembre 2021
+ *
+ */
 @Component
 public class CustomErrorAttributes extends DefaultErrorAttributes {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);

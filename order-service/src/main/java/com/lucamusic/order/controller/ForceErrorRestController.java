@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * ForceErrorRestController
- * Controller para los errores
- * 
- * @author Jose Antonio
- * @version 1.0 Septiembre 2021
+ * Controlador de errores del microservicio
+ * @author Jose
+ * @version 1.0, Septiembre 2021
+ *
  */
 @RestController
 public class ForceErrorRestController {
