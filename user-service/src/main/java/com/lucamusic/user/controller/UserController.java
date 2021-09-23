@@ -35,19 +35,20 @@ import org.springframework.web.server.ResponseStatusException;
  * @author Emanuel
  * @version 14/09/2021/v1
  */
+
 @Slf4j
 @RestController
 @RequestMapping("/users")
 public class UserController {
         
     @Autowired
-        private AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
-        @Autowired
-        private CustomUserDetailsService userDetailsService;
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
 
-        @Autowired
-        private JwtUtil jwtTokenUtil;
+    @Autowired
+    private JwtUtil jwtTokenUtil;
         
         @PostMapping("/authenticate")
         public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest)
