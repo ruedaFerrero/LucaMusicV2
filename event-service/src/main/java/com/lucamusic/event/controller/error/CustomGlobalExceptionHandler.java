@@ -22,15 +22,38 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+/**
+ * CustomGlobalExceptionHandler
+ * Clase que gestiona los distintos errores que pueden ocurrir durante las peticiones
+ * 
+ * @author Jose Antonio
+ * @version 1.0 Septiembre 2021
+ *
+ */
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler{
 	
+	/**
+	 * springHandleNotFound
+	 * Método que gestiona el error de Event no encontrado
+	 * @param response HttpServletResponse
+	 * @throws IOException
+	 */
 	@ExceptionHandler(EventNotFoundException.class)
 	public void springHandleNotFound(HttpServletResponse response) throws IOException{
 		logger.info("------- EventNotFoundException() ");
 		response.sendError(HttpStatus.NOT_FOUND.value());
 	}
 	
+	/**
+	 * springHandleBadRequest
+	 * Método que gestiona el error Bad Request
+	 * 
+	 * @param response HttpServletResponse
+	 * @throws IOException
+	 * @author Jose Antonio
+	 * @version 1.0 Septiembre 2021
+	 */
 	@ExceptionHandler({
 		BadRequestException.class,
 		org.springframework.web.method.annotation.MethodArgumentTypeMismatchException.class,
@@ -41,6 +64,12 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		response.sendError(HttpStatus.BAD_REQUEST.value());
 	}
 	
+	/**
+	 * constraintViolationException
+	 * Método que gestiona los errores por violación de restricciones
+	 * @param response HttpServletResponse
+	 * @throws IOException
+	 */
 	@ExceptionHandler(ConstraintViolationException.class)
 	public void constraintViolationException(HttpServletResponse response) throws IOException{
 		logger.info("------- ConstraintViolationException() ");

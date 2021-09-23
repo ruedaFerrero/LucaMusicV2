@@ -1,5 +1,13 @@
 package com.lucamusic.event.controller.error;
 
+/**
+ * EventNotFoundException
+ * Clase que trata el error 404: Event no encontrado
+ * 
+ * @author Jose Antonio
+ * @version 1.0, Septiembre 1.0
+ *
+ */
 public class EventNotFoundException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
