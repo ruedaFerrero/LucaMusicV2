@@ -5,8 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.lucamusic.user.entity.DAOUser;
 
-import java.util.List;
-
 /**
 * Nombre de la clase: UserRepository
  * Esta Interfaz es la encargada de llamar a los metodos(save, delete, findById...)
