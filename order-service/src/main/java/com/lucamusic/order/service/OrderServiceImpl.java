@@ -1,11 +1,8 @@
 package com.lucamusic.order.service;
 
-import com.lucamusic.order.model.EventResponse;
-import com.lucamusic.order.model.Order;
-import com.lucamusic.order.model.OrderInfo;
-import com.lucamusic.order.model.UserResponse;
-import com.lucamusic.order.model.PaymentResponse;
-import com.lucamusic.order.model.PaymentInfo;
+import com.lucamusic.order.controller.error.EventNotFoundException;
+import com.lucamusic.order.controller.error.UserNotFoundException;
+import com.lucamusic.order.model.*;
 import lombok.SneakyThrows;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,28 +30,47 @@ public class OrderServiceImpl implements OrderService {
 	@SneakyThrows
 	@Override
 	public Order createOrder(OrderInfo info, String extractToken) {
-		
 		HttpHeaders headers= new HttpHeaders();
 		headers.add("Authorization", "Bearer " + extractToken);
-		HttpEntity<String> request = new HttpEntity<String>(headers);
-		System.out.println(request);
+		HttpEntity<?> request = new HttpEntity<String>(headers);
 
-		final ResponseEntity<UserResponse> user = restTemplate.exchange("http://user-service/users/" + info.getUserId(), HttpMethod.GET, request, UserResponse.class);
-		final ResponseEntity<EventResponse> event = restTemplate.exchange("http://event-service/events/" + info.getEventId(), HttpMethod.GET, request, EventResponse.class);
-		
+		final ResponseEntity<User> userResponse = restTemplate.exchange("http://user-service/users/" + info.getUserId(), HttpMethod.GET, request, User.class);
+		final ResponseEntity<Event> eventResponse = restTemplate.exchange("http://event-service/events/" + info.getEventId(), HttpMethod.GET, request, Event.class);
+
+		if(!userResponse.hasBody()){
+			throw new UserNotFoundException();
+		}
+
+		if(!eventResponse.hasBody()){
+			throw new EventNotFoundException();
+		}
+
+		Event event = eventResponse.getBody();
+		User user = userResponse.getBody();
+		String operationStatus;
+
 		Order order = Order.builder()
-				.eventName(event.getBody().getName())
-				.musicStyle(event.getBody().getMusicStyle())
-				.userName(user.getBody().getFullName())
+				.eventName(event.getName())
+				.musicStyle(event.getMusicStyle())
+				.userName(user.getFullName())
 				.numTickets(info.getNumTickets())
 				.build();
 
-		String operationStatus = validateOrder(info.getPaymentInfo()).getStatus();
-		if(operationStatus.equals("Valid account")){
-			order.setStatus("Pago aceptado");
-		} else
-			order.setStatus(operationStatus);
-		
+		if(event.getTicketsSold() + info.getNumTickets() <= (event.getLocation().getCapacity())){
+			operationStatus = validateOrder(info.getPaymentInfo()).getStatus();
+			if(operationStatus.equals("Valid account")){
+				order.setStatus("Pago aceptado");
+				event.setTicketsSold(event.getTicketsSold() +info.getNumTickets());
+				request = new HttpEntity<Event>(event, headers);
+				ResponseEntity<Event> response2 = restTemplate.exchange("http://event-service/events/" + info.getEventId(), HttpMethod.PUT, request, Event.class);
+				System.out.println(response2.toString());
+			} else
+				order.setStatus(operationStatus);
+		}
+		else {
+			order.setStatus("No hay entradas suficientes para realizar su compra");
+		}
+
 		return order;
 	}
 

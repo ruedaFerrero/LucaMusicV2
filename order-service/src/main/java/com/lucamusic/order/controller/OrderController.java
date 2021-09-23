@@ -47,8 +47,6 @@ public class OrderController {
 	@Secured({"ROLE_USER", 	"ROLE_ADMIN"})
 	@PostMapping
 	public ResponseEntity<Order> createOrder(@RequestBody OrderInfo info, HttpServletRequest request, BindingResult result) {
-	
-	
 		String extractToken=extractJwtFromRequest(request);
 
 		//		log.info("Creating Order with User {} and Event {}", info.getUser(),info.getEvent());
@@ -56,7 +54,6 @@ public class OrderController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
 		}
 		Order  order = serv.createOrder(info,extractToken);
-		
 		return ResponseEntity.status(HttpStatus.CREATED).body(order);
 	}
 }
