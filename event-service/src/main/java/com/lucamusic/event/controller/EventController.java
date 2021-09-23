@@ -50,6 +50,7 @@ public class EventController {
 	 * @return List<Event>
 	 * @author Jose Antonio
 	 */
+
 	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@GetMapping
 	public ResponseEntity<List<Event>> getEvents(@RequestParam (required = false, name = "musicStyle")String musicStyle, @RequestParam (required = false, name = "name")String name ) {
@@ -81,7 +82,7 @@ public class EventController {
 	 * @return Event
 	 * @author Jose Antonio
 	 */
-	@Secured("ROLE_ADMIN")
+	@Secured({"ROLE_USER", 	"ROLE_ADMIN"})
 	@GetMapping("/{id}")
 	public ResponseEntity<Event> getEventById(@PathVariable("id") String id) {
 		log.info("Fetching Event with id {}", id);
@@ -101,6 +102,7 @@ public class EventController {
 	 * @return respuesta 201, CREATED
 	 * @author Jose Antonio
 	 */
+	@Secured("ROLE_ADMIN")
 	@PostMapping
 	public ResponseEntity<Event> createEvent(@Valid @RequestBody Event event, BindingResult result) {
 		log.info("Creating Event: {}", event);
@@ -120,6 +122,7 @@ public class EventController {
 	 * @return ResponseEntity 200, OK
 	 * @author Edgar
 	 */
+	@Secured("ROLE_ADMIN")
 	@PutMapping("/{id}")
 	public ResponseEntity<Event> modifyEvent(@PathVariable("id") String id, @Valid @RequestBody Event event,
 			BindingResult result) {
@@ -144,6 +147,7 @@ public class EventController {
 	 * @return ResponseEntity 200, OK
 	 * @author Edgar
 	 */
+	@Secured("ROLE_ADMIN")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Event> deleteEvent(@PathVariable("id") String id) {
 		log.info("Fetching and deleting Event with id {}", id);
@@ -157,10 +161,4 @@ public class EventController {
 		return ResponseEntity.ok(eventDeleted);
 	}
 	
-	
-	@GetMapping("/name")
-	public ResponseEntity <List<Event>> findByName(@RequestBody Event event, String name) {
-		List<Event> events = serv.eventsFilteredByName(name);
-		return ResponseEntity.ok(serv.eventsFilteredByName(name));
-	}
 }
