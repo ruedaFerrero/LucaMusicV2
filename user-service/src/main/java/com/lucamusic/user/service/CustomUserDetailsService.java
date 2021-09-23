@@ -1,10 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.lucamusic.user.service;
-
 
 import com.lucamusic.user.entity.User;
 import com.lucamusic.user.repository.UserRepository;
@@ -19,17 +13,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 /**
  *
  * @author miso
  */
+
 @Slf4j
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userDao;
-
+    private UserRepository userRepository;
     @Autowired
     private PasswordEncoder bcryptEncoder;
     
@@ -37,7 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         List<SimpleGrantedAuthority> roles=null;
         
-        User user = userDao.findByEmail(email);
+        User user = userRepository.findByEmail(email);
         if (user != null) {
                 roles = Arrays.asList(new SimpleGrantedAuthority(user.getRole()));
                 return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), roles);
@@ -47,19 +42,20 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
     
     public User save(User user) {
-        User userDB = userDao.findByEmail(user.getEmail());
+        User userDB = userRepository.findByEmail(user.getEmail());
         if(userDB != null) {
-                 return userDB;
+            return userDB;
         }
-        User newUser = new User();
-        newUser.setFullName(user.getFullName());
-        newUser.setEmail(user.getEmail());
-        newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-        newUser.setRole(user.getRole());
-        newUser.setStatus("CREATED");
-        newUser.setRegisterDate(LocalDate.now());
-        System.out.println("########################: "+newUser);
-        return userDao.save(newUser);
+
+        userDB = User.builder()
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .password(bcryptEncoder.encode(user.getPassword()))
+                .role(user.getRole())
+                .status("CREATED")
+                .registerDate(LocalDate.now()).build();
+
+        return userRepository.save(userDB);
     }
     
     public User findByID(Long id) {
@@ -67,6 +63,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private User findByIdNotDeleted(Long id){
-        return userDao.findByIdAndStatusNotContains(id, "DELETED").orElse(null);
+        return userRepository.findByIdAndStatusNotContains(id, "DELETED").orElse(null);
     }
 }

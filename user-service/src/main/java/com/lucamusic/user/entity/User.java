@@ -11,10 +11,13 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 
 /**
 * Nombre de la clase: User
@@ -23,7 +26,7 @@ import lombok.NoArgsConstructor;
  * @version: 14/09/2021/v1
  */
 
-@Data @NoArgsConstructor @AllArgsConstructor
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
@@ -37,5 +40,6 @@ public class User implements Serializable {
 	private String password;
 	private LocalDate registerDate;
 	private String status;
+	@NotNull @Pattern(regexp = "ROLE_ADMIN|ROLE_USER")
 	private String role;
 }

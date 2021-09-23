@@ -60,7 +60,7 @@ public class SprintSecurityConfiguration extends WebSecurityConfigurerAdapter{
 		// We don't need CSRF for this example
 		httpSecurity.csrf().disable()
 					.authorizeRequests()
-                    .antMatchers("/users/authenticate", "/users/register", "swagger-ui.html").permitAll()
+                    .antMatchers("/users/login", "/users/register").permitAll()
 					.anyRequest().authenticated()
                     .and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).
                     and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
