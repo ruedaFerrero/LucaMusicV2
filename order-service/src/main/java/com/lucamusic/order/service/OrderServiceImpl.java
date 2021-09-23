@@ -41,14 +41,9 @@ public class OrderServiceImpl implements OrderService {
 		HttpEntity<String> request = new HttpEntity<String>(headers);
 		System.out.println(request);
 	
-		final ResponseEntity<UserResponse> user = restTemplate.exchange("http://user-service/users/" + userId, HttpMethod.GET, request, UserResponse.class);	
-		user.getBody();
-		
+		final ResponseEntity<UserResponse> user = restTemplate.exchange("http://user-service/users/" + userId, HttpMethod.GET, request, UserResponse.class);
 		final EventResponse event = restTemplate.getForObject("http://event-service/events/" + eventId, EventResponse.class);
-		
-		
 
-		
 		Order order = Order.builder()
 				.eventName(event.getName())
 				.musicStyle(event.getMusicStyle())
@@ -56,8 +51,8 @@ public class OrderServiceImpl implements OrderService {
 				.numTickets(info.getNumTickets())
 				.build();
 
-		
-		
+
+
 		String operationStatus = validateOrder(info.getPaymentInfo()).getStatus();
 		if(operationStatus.equals("Valid account")){
 			order.setStatus("Pago aceptado");

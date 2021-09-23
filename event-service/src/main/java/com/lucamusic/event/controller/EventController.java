@@ -7,11 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-<<<<<<< HEAD
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.ui.Model;
-=======
->>>>>>> 18bd4555a708c08a719f41677cce93d57ec7f032
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,13 +50,12 @@ public class EventController {
 	 * @return List<Event>
 	 * @author Jose Antonio
 	 */
-	@Secured("ROLE_USER")
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	@GetMapping
 	public ResponseEntity<List<Event>> getEvents(@RequestParam (required = false, name = "musicStyle")String musicStyle, @RequestParam (required = false, name = "name")String name ) {
 		log.info("Fetching all Events");
 
 		List<Event> events;
-		
 		//Comprobar también que el estado del evento es siempre "created"
 		if(musicStyle != null && name != null) {
 			events = serv.findAllFiltered(name, musicStyle);
@@ -168,6 +163,4 @@ public class EventController {
 		List<Event> events = serv.eventsFilteredByName(name);
 		return ResponseEntity.ok(serv.eventsFilteredByName(name));
 	}
-	
-	
 }
