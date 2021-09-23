@@ -1,9 +1,18 @@
 package com.lucamusic.order.controller;
 
 import com.lucamusic.order.model.OrderInfo;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -40,14 +49,27 @@ public class OrderController {
 	 * @return respuesta 201, CREATED
 	 * @author Emanuel
 	 */
-	@GetMapping
-	public ResponseEntity<Order> createOrder(@RequestBody OrderInfo info, @RequestParam (name="eventId")String eventId, @RequestParam (name= "userId") String userId,@RequestHeader("Authorization")String bearerToken, BindingResult result) {
+
+	private String extractJwtFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+                return bearerToken.substring(7, bearerToken.length());
+        }
+        return null;
+    }
 	
+	@GetMapping
+	public ResponseEntity<Order> createOrder(@RequestBody OrderInfo info, @RequestParam (name="eventId")String eventId, @RequestParam (name= "userId") String userId,HttpServletRequest request, BindingResult result) {
+	
+	
+		String extractToken=extractJwtFromRequest(request);
+		
+		
 		//		log.info("Creating Order with User {} and Event {}", info.getUser(),info.getEvent());
 		if(result.hasErrors()){
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
 		}
-		Order  order = serv.createOrder(eventId, userId, info);
+		Order  order = serv.createOrder(eventId, userId, info,extractToken);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(order);
 	}
