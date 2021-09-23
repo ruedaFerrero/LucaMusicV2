@@ -1,0 +1,591 @@
+{
+	"info": {
+		"_postman_id": "fa30c82e-a650-4806-8c47-b570cabe8063",
+		"name": "LucaMusic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Filter",
+					"item": [
+						{
+							"name": "GetAll",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huZG9lQGFkbWluLmNvbSIsImlzQWRtaW4iOnRydWUsImV4cCI6MTYzMjQwOTI3NCwiaWF0IjoxNjMyMzkxMjc0fQ.WS0O4W9qenESFRP6CflDelQXxKbLEJC5baTlO5AVfdw9SGdLRApBJmfygtORdxuLo5zk8bC8BECpxowIu1LUow",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8091/events/",
+									"host": [
+										"localhost"
+									],
+									"port": "8091",
+									"path": [
+										"events",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "FilterGenre",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huZG9lQGFkbWluLmNvbSIsImlzQWRtaW4iOnRydWUsImV4cCI6MTYzMjQwOTI3NCwiaWF0IjoxNjMyMzkxMjc0fQ.WS0O4W9qenESFRP6CflDelQXxKbLEJC5baTlO5AVfdw9SGdLRApBJmfygtORdxuLo5zk8bC8BECpxowIu1LUow",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8091/events?musicStyle=ms",
+									"host": [
+										"localhost"
+									],
+									"port": "8091",
+									"path": [
+										"events"
+									],
+									"query": [
+										{
+											"key": "musicStyle",
+											"value": "ms"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "FilterName",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huZG9lQGFkbWluLmNvbSIsImlzQWRtaW4iOnRydWUsImV4cCI6MTYzMjQwOTI3NCwiaWF0IjoxNjMyMzkxMjc0fQ.WS0O4W9qenESFRP6CflDelQXxKbLEJC5baTlO5AVfdw9SGdLRApBJmfygtORdxuLo5zk8bC8BECpxowIu1LUow",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8091/events?name=name",
+									"host": [
+										"localhost"
+									],
+									"port": "8091",
+									"path": [
+										"events"
+									],
+									"query": [
+										{
+											"key": "name",
+											"value": "name"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "FilterGenre&Name",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huZG9lQGFkbWluLmNvbSIsImlzQWRtaW4iOnRydWUsImV4cCI6MTYzMjQwOTI3NCwiaWF0IjoxNjMyMzkxMjc0fQ.WS0O4W9qenESFRP6CflDelQXxKbLEJC5baTlO5AVfdw9SGdLRApBJmfygtORdxuLo5zk8bC8BECpxowIu1LUow",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8091/events?musicStyle=ms&name=Test02",
+									"host": [
+										"localhost"
+									],
+									"port": "8091",
+									"path": [
+										"events"
+									],
+									"query": [
+										{
+											"key": "musicStyle",
+											"value": "ms"
+										},
+										{
+											"key": "name",
+											"value": "Test02"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "DeleteEvent",
+					"item": [
+						{
+							"name": "AsUser",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZ2FyY2lhQHVzZXIuY29tIiwiaXNVc2VyIjp0cnVlLCJleHAiOjE2MzI0MTQyNDksImlhdCI6MTYzMjM5NjI0OX0.nGzLdtLfsSTcrQZ3eZKz2W9397OqE-vwbpil9jwEHN0WercmU3WqwaBKScgNFU9LcVQdhXR6C6H9G043NiSnfQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8091/events/6141b0869545c058ffd52849",
+									"host": [
+										"localhost"
+									],
+									"port": "8091",
+									"path": [
+										"events",
+										"6141b0869545c058ffd52849"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "AsAdmin",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huZG9lQGFkbWluLmNvbSIsImlzQWRtaW4iOnRydWUsImV4cCI6MTYzMjQwOTI3NCwiaWF0IjoxNjMyMzkxMjc0fQ.WS0O4W9qenESFRP6CflDelQXxKbLEJC5baTlO5AVfdw9SGdLRApBJmfygtORdxuLo5zk8bC8BECpxowIu1LUow",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:8091/events/6141b0869545c058ffd52849",
+									"host": [
+										"localhost"
+									],
+									"port": "8091",
+									"path": [
+										"events",
+										"6141b0869545c058ffd52849"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huZG9lQGFkbWluLmNvbSIsImlzQWRtaW4iOnRydWUsImV4cCI6MTYzMjQwOTI3NCwiaWF0IjoxNjMyMzkxMjc0fQ.WS0O4W9qenESFRP6CflDelQXxKbLEJC5baTlO5AVfdw9SGdLRApBJmfygtORdxuLo5zk8bC8BECpxowIu1LUow",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8091/events/6141b0869545c058ffd52849",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"events",
+								"6141b0869545c058ffd52849"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddEvent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huZG9lQGFkbWluLmNvbSIsImlzQWRtaW4iOnRydWUsImV4cCI6MTYzMjQwOTI3NCwiaWF0IjoxNjMyMzkxMjc0fQ.WS0O4W9qenESFRP6CflDelQXxKbLEJC5baTlO5AVfdw9SGdLRApBJmfygtORdxuLo5zk8bC8BECpxowIu1LUow",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": \"6141b0869545c058ffd52849\",\r\n        \"name\": \"Test09\",\r\n        \"shortDescription\": \"Test\",\r\n        \"longDescription\": null,\r\n        \"photoUrl\": null,\r\n        \"date\": \"10/10/2021\",\r\n        \"location\": {\r\n            \"name\": \"Test09\",\r\n            \"address\": \"Buena\",\r\n            \"capacity\": 560\r\n        },\r\n        \"prices\": null,\r\n        \"musicStyle\": \"mstyle\",\r\n        \"ticketsSold\": 0,\r\n        \"status\": \"CREATED\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8091/events",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddEvent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huZG9lQGFkbWluLmNvbSIsImlzQWRtaW4iOnRydWUsImV4cCI6MTYzMjQwOTI3NCwiaWF0IjoxNjMyMzkxMjc0fQ.WS0O4W9qenESFRP6CflDelQXxKbLEJC5baTlO5AVfdw9SGdLRApBJmfygtORdxuLo5zk8bC8BECpxowIu1LUow",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": \"6141b0869545c058ffd52849\",\r\n        \"name\": \"Test09\",\r\n        \"shortDescription\": \"Test\",\r\n        \"longDescription\": null,\r\n        \"photoUrl\": null,\r\n        \"date\": \"10/10/2021\",\r\n        \"location\": {\r\n            \"name\": \"Test09\",\r\n            \"address\": \"Buena\",\r\n            \"capacity\": 560\r\n        },\r\n        \"prices\": null,\r\n        \"musicStyle\": \"mstyle\",\r\n        \"ticketsSold\": 0,\r\n        \"status\": \"CREATED\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8091/events",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModifyEvent",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huZG9lQGFkbWluLmNvbSIsImlzQWRtaW4iOnRydWUsImV4cCI6MTYzMjQwOTI3NCwiaWF0IjoxNjMyMzkxMjc0fQ.WS0O4W9qenESFRP6CflDelQXxKbLEJC5baTlO5AVfdw9SGdLRApBJmfygtORdxuLo5zk8bC8BECpxowIu1LUow",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"name\": \"TESTPUT\",\r\n        \"shortDescription\": \"Test\",\r\n        \"date\": \"10/10/2021\",\r\n        \"location\": {\r\n            \"name\": \"Test09\",\r\n            \"address\": \"Buena\",\r\n            \"capacity\": 560\r\n        },\r\n        \"musicStyle\": \"mstyle\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8091/events/6141b0869545c058ffd52849",
+							"host": [
+								"localhost"
+							],
+							"port": "8091",
+							"path": [
+								"events",
+								"6141b0869545c058ffd52849"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "CreateOrder",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmcmFuc2RmZ0BhZG1pbi5jb20iLCJpc0FkbWluIjp0cnVlLCJleHAiOjE2MzI0MTYyODMsImlhdCI6MTYzMjM5ODI4M30.Uy0yJiwesmXUrmt7Huzgpjc3eaX0X4ZreJ--LXMjCcLb_Byut-8IR3BvhEyvJECoOgJBUVKDRPkhxPmddyEtTw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"eventId\" : \"6141b0869545c058ffd52849\",\r\n\r\n    \"userId\" : \"1\",\r\n\r\n    \"paymentInfo\":{\r\n\r\n       \"creditCard\":\"34444\",\r\n\r\n       \"cvv\":\"111\",\r\n\r\n       \"creditCardOwner\":\"Pepito\"\r\n\r\n   },\r\n\r\n    \"numTickets\":\"32\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8093/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "8093",
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "validatePayment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"creditCard\" : \"3333333\",\r\n    \"ccv\" : \"456\",\r\n    \"creditCardOwner\" : \"Paco\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8050/",
+							"host": [
+								"localhost"
+							],
+							"port": "8050",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n    \"fullName\": \"Fran\",\r\n\r\n    \"email\": \"fran@admin.com\",\r\n\r\n    \"password\": \"fran\",\r\n\r\n    \"role\": \"ROLE_ADMIN\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8092/users/register",
+									"host": [
+										"localhost"
+									],
+									"port": "8092",
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Authenticate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n    \"email\": \"johndoe@admin.com\",\r\n\r\n    \"password\": \"john\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8092/users/login",
+									"host": [
+										"localhost"
+									],
+									"port": "8092",
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n    \"fullName\": \"Alberto Garcia\",\r\n\r\n    \"email\": \"agarcia@user.com\",\r\n\r\n    \"password\": \"alberto\",\r\n\r\n    \"role\": \"ROLE_USER\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8092/users/register",
+									"host": [
+										"localhost"
+									],
+									"port": "8092",
+									"path": [
+										"users",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Authenticate",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n    \"email\": \"agarcia@user.com\",\r\n\r\n    \"password\": \"alberto\"\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8092/users/login",
+									"host": [
+										"localhost"
+									],
+									"port": "8092",
+									"path": [
+										"users",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "GetId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqb2huZG9lQGFkbWluLmNvbSIsImlzQWRtaW4iOnRydWUsImV4cCI6MTYzMjQwOTI3NCwiaWF0IjoxNjMyMzkxMjc0fQ.WS0O4W9qenESFRP6CflDelQXxKbLEJC5baTlO5AVfdw9SGdLRApBJmfygtORdxuLo5zk8bC8BECpxowIu1LUow",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8092/users/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8092",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
