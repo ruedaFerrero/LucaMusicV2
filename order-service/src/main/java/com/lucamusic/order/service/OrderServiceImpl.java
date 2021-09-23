@@ -42,14 +42,14 @@ public class OrderServiceImpl implements OrderService {
 		System.out.println(request);
 	
 
-		final ResponseEntity<UserResponse> user = restTemplate.exchange("http://user-service/users/" + info.getUserId(), HttpMethod.GET, request, UserResponse.class);	
-		user.getBody();
+		final ResponseEntity<UserResponse> user = restTemplate.exchange("http://user-service/users/" + info.getUserId(), HttpMethod.GET, request, UserResponse.class);
+//		user.getBody();
 		
-		final EventResponse event = restTemplate.getForObject("http://event-service/events/" + info.getEventId(), EventResponse.class);
+		final ResponseEntity<EventResponse> event = restTemplate.exchange("http://event-service/events/" + info.getEventId(), HttpMethod.GET, request, EventResponse.class);
 		
 		Order order = Order.builder()
-				.eventName(event.getName())
-				.musicStyle(event.getMusicStyle())
+				.eventName(event.getBody().getName())
+				.musicStyle(event.getBody().getMusicStyle())
 				.userName(user.getBody().getFullName())
 				.numTickets(info.getNumTickets())
 				.build();
@@ -61,8 +61,6 @@ public class OrderServiceImpl implements OrderService {
 			order.setStatus(operationStatus);
 		
 		return order;
-		
-		
 	}
 
 	/**

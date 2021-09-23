@@ -10,11 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.lucamusic.order.model.Order;
@@ -49,13 +45,12 @@ public class OrderController {
     }
 	
 	@Secured({"ROLE_USER", 	"ROLE_ADMIN"})
-	@GetMapping
+	@PostMapping
 	public ResponseEntity<Order> createOrder(@RequestBody OrderInfo info, HttpServletRequest request, BindingResult result) {
 	
 	
 		String extractToken=extractJwtFromRequest(request);
-		
-		
+
 		//		log.info("Creating Order with User {} and Event {}", info.getUser(),info.getEvent());
 		if(result.hasErrors()){
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
