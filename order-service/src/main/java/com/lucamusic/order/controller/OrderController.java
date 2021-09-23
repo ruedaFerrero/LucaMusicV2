@@ -14,6 +14,7 @@ import com.lucamusic.order.model.User;
 import com.lucamusic.order.service.OrderService;
 import com.lucamusic.order.utils.Utils;
 
+
 import lombok.extern.slf4j.Slf4j;
 /**
  * OrderController
@@ -31,6 +32,7 @@ public class OrderController {
 
 	@Autowired
 	private OrderService serv;
+	
 
 	/**
 	 * Método para crear un objeto Order nuevo
@@ -39,12 +41,14 @@ public class OrderController {
 	 * @author Emanuel
 	 */
 	@GetMapping
-	public ResponseEntity<Order> createOrder(@RequestBody String eventId, String userId, OrderInfo info, BindingResult result) {
-//		log.info("Creating Order with User {} and Event {}", info.getUser(),info.getEvent());
+	public ResponseEntity<Order> createOrder(@RequestBody OrderInfo info, @RequestParam (name="eventId")String eventId, @RequestParam (name= "userId") String userId,@RequestHeader("Authorization")String bearerToken, BindingResult result) {
+	
+		//		log.info("Creating Order with User {} and Event {}", info.getUser(),info.getEvent());
 		if(result.hasErrors()){
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
 		}
 		Order  order = serv.createOrder(eventId, userId, info);
+		
 		return ResponseEntity.status(HttpStatus.CREATED).body(order);
 	}
 }
