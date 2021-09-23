@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ForceErrorRestController {
-
 	//Error no mapeado
 	@GetMapping(value = "/users/throwException")
 	public void throwException() {

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lucamusic.user.entity.DAOUser;
+import com.lucamusic.user.entity.User;
 import com.lucamusic.user.model.AuthenticationRequest;
 import com.lucamusic.user.model.AuthenticationResponse;
 import com.lucamusic.user.service.CustomUserDetailsService;
@@ -69,43 +69,30 @@ public class UserController {
         }
 
         @PostMapping("/register")
-        public ResponseEntity<?> saveUser(@Valid @RequestBody  DAOUser user, BindingResult result) throws Exception {
+        public ResponseEntity<?> saveUser(@Valid @RequestBody User user, BindingResult result) throws Exception {
             log.info("Creating User: {}", user);
             if(result.hasErrors()){
                     throw new ResponseStatusException(HttpStatus.BAD_REQUEST, Utils.formatBindingResult(result));
             }
-            DAOUser userDB = userDetailsService.save(user);
+            User userDB = userDetailsService.save(user);
             return ResponseEntity.status(HttpStatus.CREATED).body(userDB);
         }
 
 	/**
-	 * Método para obtener la información de un usuario
+	 * Como admin método para obtener la información de un usuario
 	 * @param id Id del usuario
 	 * @return Usuario + status 200, 404 si no existe
 	 */
 
+	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/{id}")
-	public ResponseEntity<DAOUser> getUserById(@PathVariable("id") Long id){
+	public ResponseEntity<User> getUserById(@PathVariable("id") Long id){
 		log.info("Fetching User with id {}", id);
-		
-		DAOUser user = userDetailsService.findByID(id);
+		User user = userDetailsService.findByID(id);
 		if(user == null){
 			log.error("User with id {} not found", id);
-//			return ResponseEntity.notFound().build();
 			throw new UserNotFoundException();
 		}
 		return ResponseEntity.ok(user);
-	}
-
-    @Secured({"ROLE_USER", "ROLE_ADMIN"})
-    @GetMapping("/hellouser")
-	public ResponseEntity<String> helloUser(){
-            return ResponseEntity.ok("Hello user");
-	}
-
-    @Secured("ROLE_ADMIN")
-    @GetMapping("/helloadmin")
-	public ResponseEntity<String> helloAdmin(){
-            return ResponseEntity.ok("Hello Admin");
 	}
 }

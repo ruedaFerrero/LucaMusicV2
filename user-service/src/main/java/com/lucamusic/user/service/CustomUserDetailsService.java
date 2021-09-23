@@ -6,7 +6,7 @@
 package com.lucamusic.user.service;
 
 
-import com.lucamusic.user.entity.DAOUser;
+import com.lucamusic.user.entity.User;
 import com.lucamusic.user.repository.UserRepository;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -14,7 +14,6 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -38,21 +37,21 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         List<SimpleGrantedAuthority> roles=null;
         
-        DAOUser user = userDao.findByEmail(email);
+        User user = userDao.findByEmail(email);
         if (user != null) {
                 roles = Arrays.asList(new SimpleGrantedAuthority(user.getRole()));
-                return new User(user.getEmail(), user.getPassword(), roles);
+                return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), roles);
         }
         
         throw new UsernameNotFoundException("User not found with username: " + email);
     }
     
-    public DAOUser save(DAOUser user) {
-        DAOUser userDB = userDao.findByEmail(user.getEmail());
+    public User save(User user) {
+        User userDB = userDao.findByEmail(user.getEmail());
         if(userDB != null) {
                  return userDB;
         }
-        DAOUser newUser = new DAOUser();
+        User newUser = new User();
         newUser.setFullName(user.getFullName());
         newUser.setEmail(user.getEmail());
         newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
@@ -63,8 +62,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         return userDao.save(newUser);
     }
     
-    public DAOUser findByID(Long id) {
-            return userDao.findById(id).orElse(null);
+    public User findByID(Long id) {
+        return findByIdNotDeleted(id);
     }
 
+    private User findByIdNotDeleted(Long id){
+        return userDao.findByIdAndStatusNotContains(id, "DELETED").orElse(null);
+    }
 }

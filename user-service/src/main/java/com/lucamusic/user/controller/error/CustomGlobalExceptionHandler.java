@@ -75,9 +75,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 	@Override
 	protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request){
-		
 		logger.info("------- handleRequestMethodNotSupported() ");
-		
 		StringBuilder builder = new StringBuilder();
 		builder.append(ex.getMethod());
 		builder.append(" no es un método válido para esta petición. Los métodos válidos son ");
@@ -90,11 +88,5 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 		body.put("message", builder.toString());
 		
 		return new ResponseEntity<Object>(body, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED);
-		
 	}
-	
-	
-	
-	
-
 }
