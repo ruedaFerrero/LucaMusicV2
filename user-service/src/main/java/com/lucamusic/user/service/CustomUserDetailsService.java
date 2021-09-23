@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.lucamusic.user.service;
 
-
-import com.lucamusic.user.entity.DAOUser;
+import com.lucamusic.user.entity.User;
 import com.lucamusic.user.repository.UserRepository;
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -14,23 +8,23 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 /**
  *
  * @author miso
  */
+
 @Slf4j
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private UserRepository userDao;
-
+    private UserRepository userRepository;
     @Autowired
     private PasswordEncoder bcryptEncoder;
     
@@ -38,33 +32,37 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         List<SimpleGrantedAuthority> roles=null;
         
-        DAOUser user = userDao.findByEmail(email);
+        User user = userRepository.findByEmail(email);
         if (user != null) {
                 roles = Arrays.asList(new SimpleGrantedAuthority(user.getRole()));
-                return new User(user.getEmail(), user.getPassword(), roles);
+                return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), roles);
         }
         
         throw new UsernameNotFoundException("User not found with username: " + email);
     }
     
-    public DAOUser save(DAOUser user) {
-        DAOUser userDB = userDao.findByEmail(user.getEmail());
+    public User save(User user) {
+        User userDB = userRepository.findByEmail(user.getEmail());
         if(userDB != null) {
-                 return userDB;
+            return userDB;
         }
-        DAOUser newUser = new DAOUser();
-        newUser.setFullName(user.getFullName());
-        newUser.setEmail(user.getEmail());
-        newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-        newUser.setRole(user.getRole());
-        newUser.setStatus("CREATED");
-        newUser.setRegisterDate(LocalDate.now());
-        System.out.println("########################: "+newUser);
-        return userDao.save(newUser);
+
+        userDB = User.builder()
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .password(bcryptEncoder.encode(user.getPassword()))
+                .role(user.getRole())
+                .status("CREATED")
+                .registerDate(LocalDate.now()).build();
+
+        return userRepository.save(userDB);
     }
     
-    public DAOUser findByID(Long id) {
-            return userDao.findById(id).orElse(null);
+    public User findByID(Long id) {
+        return findByIdNotDeleted(id);
     }
 
+    private User findByIdNotDeleted(Long id){
+        return userRepository.findByIdAndStatusNotContains(id, "DELETED").orElse(null);
+    }
 }

@@ -41,6 +41,7 @@ public class OrderServiceImpl implements OrderService {
 		HttpEntity<String> request = new HttpEntity<String>(headers);
 		System.out.println(request);
 	
+
 		final ResponseEntity<UserResponse> user = restTemplate.exchange("http://user-service/users/" + info.getUserId(), HttpMethod.GET, request, UserResponse.class);	
 		user.getBody();
 		
@@ -53,7 +54,6 @@ public class OrderServiceImpl implements OrderService {
 				.numTickets(info.getNumTickets())
 				.build();
 
-		
 		String operationStatus = validateOrder(info.getPaymentInfo()).getStatus();
 		if(operationStatus.equals("Valid account")){
 			order.setStatus("Pago aceptado");
@@ -77,6 +77,6 @@ public class OrderServiceImpl implements OrderService {
 		return restTemplate.postForObject("http://localhost:8050/" , paymentInfo,PaymentResponse.class);
 		
 		
-				
+		
 	}
 }
