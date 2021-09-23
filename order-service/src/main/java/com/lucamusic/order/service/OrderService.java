@@ -6,6 +6,6 @@ import com.lucamusic.order.model.PaymentInfo;
 import com.lucamusic.order.model.PaymentResponse;
 
 public interface OrderService {
-	public Order createOrder(String eventId, String userId, OrderInfo info);
+	public Order createOrder(String eventId, String userId, OrderInfo info, String extractToken);
 	public PaymentResponse validateOrder(PaymentInfo paymentInfo);
 }

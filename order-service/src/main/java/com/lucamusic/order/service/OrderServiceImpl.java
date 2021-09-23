@@ -34,15 +34,16 @@ public class OrderServiceImpl implements OrderService {
 	 */
 	@SneakyThrows
 	@Override
-	public Order createOrder(String eventId, String userId, OrderInfo info) {
+	public Order createOrder(String eventId, String userId, OrderInfo info, String extractToken) {
 		
 		HttpHeaders headers= new HttpHeaders();
-		headers.add("Authorization", "Bearer " + "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0NUBnbWFpbC5jb20iLCJpc1VzZXIiOnRydWUsImV4cCI6MTYzMjM5NjM0MiwiaWF0IjoxNjMyMzc4MzQyfQ.eqU0mLeGenHmHwMRzh6AAN5Zdj16mrshoMNMs-tjllzyuW0rsvfZgvkBDkvwJy_kc0iquOA2zMWxQ0H-eQg_og");
+		headers.add("Authorization", "Bearer " + extractToken);
 		HttpEntity<String> request = new HttpEntity<String>(headers);
 		System.out.println(request);
-		
+	
 		final ResponseEntity<UserResponse> user = restTemplate.exchange("http://user-service/users/" + userId, HttpMethod.GET, request, UserResponse.class);	
 		user.getBody();
+		
 		final EventResponse event = restTemplate.getForObject("http://event-service/events/" + eventId, EventResponse.class);
 		
 		
@@ -78,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
 		
 		RestTemplate restTemplate = new RestTemplate();
 		return restTemplate.postForObject("http://localhost:8050/" , paymentInfo,PaymentResponse.class);
-		//final EventResponse event = restTemplate.getForObject("http://event-service/events/" + eventId, EventResponse.class);
+		
 		
 				
 	}
