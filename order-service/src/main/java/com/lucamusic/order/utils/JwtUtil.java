@@ -3,32 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.lucamusic.user.utils;
+package com.lucamusic.order.utils;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jws;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.SignatureException;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.JwsHeader;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.SignatureException;
-import io.jsonwebtoken.UnsupportedJwtException;
-import java.util.Arrays;
-import java.util.List;
-import lombok.Data;
-import org.springframework.security.authentication.BadCredentialsException;
+import java.util.*;
 
 /**
  *
@@ -71,7 +58,8 @@ public class JwtUtil {
     
     public boolean validateToken(String authToken) {
 		try {
-			Jws<Claims> claiJwsms = Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken);
+
+			Jws<Claims> claiJwsms = Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(authToken);
 			return true;
 		} catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
 			throw new BadCredentialsException("INVALID_CREDENTIALS", ex);
@@ -81,14 +69,14 @@ public class JwtUtil {
 	}
 
     public String getUsernameFromToken(String token) {
-            Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+            Claims claims = Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(token).getBody();
 
             return claims.getSubject();
     }
 
     public List<SimpleGrantedAuthority> getRolesFromToken(String authToken) {
             List<SimpleGrantedAuthority> roles = null;
-            Claims claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken).getBody();
+            Claims claims = Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(authToken).getBody();
             Boolean isAdmin = claims.get("isAdmin", Boolean.class);
             Boolean isUser = claims.get("isUser", Boolean.class);
             if (isAdmin != null && isAdmin == true) {

@@ -83,6 +83,7 @@ public class EventController {
 	 * @return Event
 	 * @author Jose Antonio
 	 */
+	@Secured("ROLE_ADMIN")
 	@GetMapping("/{id}")
 	public ResponseEntity<Event> getEventById(@PathVariable("id") String id) {
 		log.info("Fetching Event with id {}", id);

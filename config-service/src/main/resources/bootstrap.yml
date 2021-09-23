@@ -6,7 +6,6 @@ spring:
     config:
       server:
         git:
-
           uri: https://github.com/ruedaFerrero/LucaMusicV2.git
           searchPaths: config-data
           username: ${GIT_USER}

@@ -1,7 +1,7 @@
 
-package com.lucamusic.event.config;
+package com.lucamusic.order.config;
 
-import com.lucamusic.event.utils.JwtUtil;
+import com.lucamusic.order.utils.JwtUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.io.IOException;
 import lombok.extern.slf4j.Slf4j;
